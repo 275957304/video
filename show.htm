@@ -1,0 +1,1396 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{$head_name}</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta content="telephone=no" name="format-detection" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+
+<meta name="keywords" content="{$head_name}">
+<meta name="description" content="{$head_name}">
+
+<style type="text/css"> 
+	div.swiper_model {position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1051; overflow: hidden; background-color: rgb(53, 53, 53);-webkit-overflow-scrolling: touch; outline: 0;}
+	div.pinch-zoom,div.pinch-zoom img {width: 100%; -webkit-user-drag: none;}
+	.scEmoji {width: 100% !important;}
+	.page,.pinch-zoom-container,.pinch-zoom {height: 100% !important;}
+	div.pinch-zoom img {margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;}
+    .nscOutline img{display: none;;}
+</style>
+<!--link rel="stylesheet" href="../imgscale/style.css" /-->
+<link rel="stylesheet" type="text/css" href="/live/css/swiper-3.3.1.min.css">
+
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css" href="/live/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/live/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="/live/css/master.css?t=1121">
+<link rel="stylesheet" type="text/css" href="/live/css/live-room-main.css?t=14">
+<link rel="stylesheet" type="text/css" href="/live/css/pop-up.css">
+<link rel="stylesheet" type="text/css" href="/live/css/swiper-3.3.1.min.css">
+<style>
+body {
+	-webkit-touch-callout: none;
+	-webkit-user-select:none;
+    background: #b3d9fb;
+}
+.swiper-container ul {
+	list-style: none;
+}
+.swiper-container ul li {
+    float: left;
+    text-align: center;
+    margin: 6px 1px 2px;
+}
+.swiper-container ul li img {
+    width: 24px;
+    height: 24px;
+}
+.nscOutline {
+	height: auto !important;
+	overflow: visible !important;
+}
+
+
+.studioContents .details_title { font-size: 14px; padding-top:0px; padding-bottom: 5px; width: 100%; display:table; margin:0; }
+
+.studioContents .details_title dt.titleIcon { position: relative; display: inline-block; width: 4.625rem; height:4.625rem; border-radius: 999rem; }
+
+.studioContents .details_title dt.titleIcon img { width: 100%; border-radius: 999rem; }
+
+
+.studioContents .details_title dd.titleintel { position: relative; display: inline-block; margin-left: 2px; top: 16px; }
+
+.studioContents .details_title dd.titleintel span.titleName { color: #000; font-size: 14px; width: 20rem; overflow: hidden; display: inline-block; text-overflow: ellipsis; white-space: nowrap; }
+
+.studioContents .details_title dd.titleintel span.titleTime { color: #666; font-size:1rem; }
+
+</style>
+</head>
+
+<div id="totalPage" style="padding-bottom: 40px;">
+	<header class="headerTop" style="height: auto;    position: fixed;z-index: 999">
+        <div class="logos">
+            <a href="/live/index.php"><img style="width: 100%;" src="/live/images/360xh_live.png"></a>
+        </div>
+    </header>
+    <div class="container" style="margin-top: 45px;">
+    	<div class="row">
+        	<article class="studioContents liveContentMsg">
+            	<div class="studioTitle">
+                	<section class="studioPic" style="display: none">
+                	
+                	<img src="{$item['mobile_thumb']}" alt="">
+                	</section>
+                	{if !empty($livevideourl)}
+                	<div id="videoPlayer"></div>
+
+                	{else}
+                     <div id="play"></div>
+                	{/if}
+                </div>
+            	<header><h1>{$item['title']}</h1></header>
+                <section class="sourceInfo clearfix">
+                	<div class="sInofLeft">
+                            {if $live_status == 1}
+                             <i class='tagA on'><em class='tagOn'></em>直播中</i>
+                            {elseif $live_status == 0}
+                            <i class='tagA off'><em class='tagOff'></em>未开始</i>
+                            {else}
+                             <i class='tagA off'><em class='tagOff'></em>已结束</i>
+                            {/if}
+	                    <div class="timer">{$totime}~{$endtime}</div>
+                    </div>
+        			<div class="sInofRight" style="z-index:500">
+                		<!--a href="javascript:;" id="liveShareSpan" class="share"><i class="shareicon"></i>472</a-->
+                		<a href="javascript:;" id="livepraise" class="praise " level="2" commentid="0"><i class="praiseicon"></i>{$likenum}</a>
+        			</div>
+        		</section>
+                <section class="nscOutline liveMsg">
+                	{$introduce}
+                </section>
+               	<div class="gtNums">
+                   	<a class="guestsnums"><span class="intoLiveNums">{$intoLiveNums}</span>人参与了直播</a>
+           		</div>
+                <div class="guests">
+                	<ul id="browserUl" style="height: 7.05rem; overflow: hidden;">
+                    </ul>
+                </div>
+            </article>
+            
+            
+            
+            <!--直播-->
+            <article class="studioContents reporters live hostToComment" style="cursor: pointer;">
+            	<dl class="hostReporter">
+                	<dt class="avatar" ><img src="/live/images/360xh_logo.png" alt=""><!--i class="liveicon"></i--></dt>
+                    <dd class="intel">
+                    	<span class="reporterName">直播记者：360xh记者</span><br>
+                        <span class="reporterLocation"><i></i>{$copyfrom}</span>
+                    </dd>
+                </dl>
+            </article>
+            {loop $lists $key  $v}
+            	
+            	<article class="studioContents details blocks live">
+            	
+            	<div class="detailsTitle clearfix">
+                   <dl class="details_title">
+                        <dt class="titleIcon" ><img src="/live/images/360xh_logo.png" alt=""><!--i class="liveicon"></i--></dt>
+                        <dd class="titleintel">
+                            <span class="titleName">{$v[title]}</span><br>
+                            <span class="titleTime">{$v['date']}</span>
+                        </dd>
+                    </dl>
+
+                	
+                
+                </div>
+                <section class="nscOutline">
+                	{$v[introduce]}
+
+                </section>
+                
+                    <div class="studioMedia" rel="{count($v['thumbs'])}">
+                        {if $v[type] ==0}
+                        {if $v[total_thumb] <=1}
+                        <ul id="photos_{$v[id]}"><li style="width: 100%;height: 100%;"><img src="{$v['thumbs'][0]}"  layer-src="{$v['thumbs'][0]}"style="width: 100%;height: 100%;" alt="" class="showImg" tag="0" rel="{$v[id]}"></li></ul>
+                        {else}
+                	 	<ul  id="photos_{$v[id]}">
+                            {loop $v['thumbs']    $pic}
+            	 			<li><img src="{$pic}" alt="" class="showImg" tag="0" rel="{$v[id]}" layer-src="{$pic}"></li>
+                            {/loop}
+            	 			
+            	 			
+                    	</ul>
+                        {/if}
+                        {/if}
+                        {if $v[type] ==1}
+                            <!-- <video controls="controls" preload="auto" style="max-height:300px;">
+                            <source src="/upload/317A6B98-9614-4761-9A93-0DD9B8169659.MOV" />
+                            您的浏览器不支持 video
+                        </video> -->
+                        {if $v['thumb']}
+                        <span class="videoPlayS" >
+                            <img src="{$v['thumb']}"/>
+                            <i class="playICon"></i>
+                        </span>
+                        {/if}
+                        <video src='{$v[filepath]}' preload='auto' onended="hideLastVideo();" onpause="hideLastVideo();"  controls='controls' style='max-height:300px; display: none;' >您的浏览器不支持 video</video>
+                        {/if}
+                   </div>
+              
+                <div class="studioComments">
+
+                    <div class="replyBtn">
+                        <!--a href="javascript:;" level="{$likenum}" class="praise  "><i class="praiseIcon"></i>{$likenum}</a>&nbsp;&nbsp;-->
+                    	<a href="javascript:;" class="secondCommentSubmit" CID="{$itemid}" pid="{$v[itemid]}"><i></i>我要评论</a>
+                    </div>
+                    {loop $v['secondComment'] $ckey  $comment}
+                    <div class="commentReview threeToComment" CID="{$comment[itemid]}" >
+                        <section class="clearfix">
+                            <div class="webCastRole">
+                                <a href="javascript:;">
+                                    <span><img src="{$comment[avatar]}" alt=""></span>
+                                </a>
+                            </div>
+                            <div class="webCastSub">
+                                <div class="webCastName">
+                                    <span>{$comment[truename]}</span>
+                                    <time>{$comment[addtime]}</time>
+                                    <a href="javascript:;" commentid="{$comment[itemid]}" level="1" class="praise  "><i class="praiseIcon"></i>{$comment[likenum]}</a>
+                                </div>
+                                <p>{$comment[content]}</p>
+                            </div>
+                        </section>
+                    </div>
+                    {/loop}
+                     
+
+
+                </div>
+            	</article>
+            	{/loop}
+ 
+           <!--自媒体-->
+            <div style="display:none;" class="sendbtn podcasting userCommentDiv"><i class="userToComment"></i>我要说几句</div>
+           
+        </div>
+    </div>
+    
+    <div id="noMsg" style="padding-top: 20px; padding-bottom: 30px;">没有更多了哦(⊙o⊙)</div>
+    
+</div>
+
+<input type="hidden" value="0" id="liveCurrentPage"/>
+<input type="hidden" value="0" id="podcastCurrentPage"/>
+
+<!--回复-->
+<div class="pop_bg">
+<div class="pop-up" style="max-height: 450px;">
+	<div class="closeBtn"><i><img src="/live/images/c2cc_39.png"></i></div>
+    <div class="headTitle clearfix">
+    	<i><img src="/live/images/c2cc_30.png" alt=""></i>
+        <h1>{$title}</h1>
+    </div>
+    <div class="popTitle"><input type="text" value="{$title}" placeholder="请输入标题" class="popnoteTitle" maxlength="15"></div>
+    <div class="popArea"><div class="popNotes" contenteditable="true" style="-webkit-user-select: auto;"></div></div>
+    
+    <div class="tools" style="display: none;;">
+    	<i class="toolsExpression"><img src="/live/images/c2cc_40.png" alt=""></i>
+        <i class="toolsVideo"><img src="/live/images/c2cc_41.png" alt=""></i>
+      	<input type="file" accept="video/*" id="videoUpload" onchange="videoSelected();" style="display: none;" />
+        <!-- <i class="toolsPic"><img src="/live/images/c2cc_42.png" alt=""></i>  
+      	<input type="file" accept="image/*" id="imageUpload" onchange="imageSelected();" style="display: none;" />      -->
+        <i class="toolsPic updateImage" ><img src="/live/images/c2cc_42.png" alt=""></i>  
+    </div>
+    {template 'live/emoticon2', 'mobile'}
+    
+    <div class="upLoadmedia clearfix">
+    	<div class="upLoadVideo" style="font-size: small;">
+        </div>
+    	<ul class="upLoadImage">
+        </ul>
+    </div>
+    <button class="sub clearfix" id="commentSubmit">提&nbsp;&nbsp;&nbsp;交</button>
+    </div>
+</div>
+
+<div class="pop_bottom_bg">
+<div class="pop_bottom">
+	<div class="emojiTitle" style="margin-top: 10px; height: 3.125rem; border-bottom: 1px solid #ebebeb;">
+		<div style="background: url(/live/images/c2cc_20.png) no-repeat center center; width: 3.125rem; height: 3.125rem; float: left;"></div>
+		<div class="closeBtn" style="float: right;"><i><img src="/live/images/c2cc_39.png"></i></div>
+	</div>
+	<div style="clear: both;"></div>
+    {template 'live/emoticon', 'mobile'}
+ 
+</div>
+</div>
+
+<!--loading-->
+<div class="loading" style="display:none;">
+    <div class="spinner">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
+    <div class="wmloading">玩命加载中&middot;&middot;&middot;&middot;&middot;&middot;</div>
+</div>
+
+<footer id="footer">
+	<div class="fooertBar">
+        <ul class="fooertBarNav clearfix">
+        	<li><a href="/live/index.php"><i class="back"></i></a></li> 
+        	<li><a id="footerThumbUp" href="javascript:;"><i class="thumbUp " level="2" commentid="0" ></i></a></li>     
+        	<li><a href="javascript:window.location.reload();" ><span class="markNum havaNewData" style="display: none;">new</span><i class="refresh"></i></a></li>   
+        	<!-- <li><a href="javascript:;" onclick="sharewx()"><span class="markNum">472</span><i class="share"></i></a></li>  -->  
+        	<li><a href="javascript:;" id="toTop" style="cursor: pointer;"><i class="toTop"></i></a></li>
+        	<li class="userli"  id="UserPersonalAvatar" style="display: none;"><a href="javascript:;" class="usera"><span class="UserPersonal"><em><img src="{$member['spiderurl']}"/></em></span></a></li>
+        </ul>
+	</div>
+</footer>
+
+<div style="display: none;" id="LiveContent" >{$introduce}</div>
+
+<script src="/live/js/jquery-1.11.3.min.js"></script>
+{if empty($livevideourl)}
+<script type="text/javascript" src="http://cdn.aodianyun.com/lss/aodianplay/player.js"></script>
+<script type="text/javascript">
+var objectPlayer=new aodianPlayer({
+    container:'play',//播放器容器ID，必要参数
+    rtmpUrl: '{$rtmpurl}',//控制台开通的APP rtmp地址，必要参数
+    hlsUrl: '{$hlsurl}',//控制台开通的APP hls地址，必要参数
+    /* 以下为可选参数*/
+    width:  '98%',//播放器宽度，可用数字、百分比等
+    height: '320',//播放器高度，可用数字、百分比等
+    autostart: true,//是否自动播放，默认为false
+    bufferlength: '1',//视频缓冲时间，默认为3秒。hls不支持！手机端不支持
+    maxbufferlength: '2',//最大视频缓冲时间，默认为2秒。hls不支持！手机端不支持
+    stretching: '1',//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1。hls初始设置不支持，手机端不支持
+    controlbardisplay: 'enable',//是否显示控制栏，值为：disable、enable默认为disable。
+    adveDeAddr: '{$item['mobile_thumb']}',//封面图片链接
+    adveWidth: '100%',//封面图宽度
+    adveHeight: 320,//封面图高度
+    //adveReAddr: '',//封面图点击链接
+    //isclickplay: false,//是否单击播放，默认为false
+    isfullscreen: true//是否双击全屏，默认为true
+});
+/* rtmpUrl与hlsUrl同时存在时播放器优先加载rtmp*/
+/* 以下为Aodian Player支持的事件 */
+/* objectPlayer.startPlay();//播放 */
+/* objectPlayer.pausePlay();//暂停 */
+/* objectPlayer.stopPlay();//停止 hls不支持*/
+/* objectPlayer.closeConnect();//断开连接 */
+/* objectPlayer.setMute(true);//静音或恢复音量，参数为true|false */
+/* objectPlayer.setVolume(volume);//设置音量，参数为0-100数字 */
+/* objectPlayer.setFullScreenMode(1);//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1。手机不支持 */
+</script>
+{else}
+
+<script type="text/javascript" charset="utf-8" src="https://cdn.aodianyun.com/static/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://cdn.aodianyun.com/lss/aodianplays/player.js"></script>
+<script type="text/javascript">
+var w = "98%";//视频宽度
+var h = "320";//视频高度
+var url = "{$livevideourl}";//视频地址
+var image = "{$livevideothumb}";//封面图片
+var objectPlayer=new aodianPlayer({
+  container:'videoPlayer',//播放器容器ID，必要参数
+  hlsUrl: url,//控制台开通的APP hls地址，必要参数
+  /* 以下为可选参数*/
+  width: w,//播放器宽度，可用数字、百分比等
+  height: h,//播放器高度，可用数字、百分比等
+  autostart: true,//是否自动播放，默认为false
+  controlbardisplay: 'enable',//是否显示控制栏，值为：disable、enable默认为disable。
+  adveDeAddr: image,//封面图片链接
+  adveWidth: w,//封面图宽度
+  adveHeight: h,//封面图高度
+  //adveReAddr: ''//封面图点击链接
+});
+</script>
+{/if}
+
+<!--页面加载完毕 ajax获取数据的函数-->
+<script>
+ 
+//页面加载完毕调用的函数
+$(function(){
+	setBrowserInfo(); //ajax设置浏览用户
+	//setPodcastInfo2(0); //ajax设置自媒体数据 	
+	setCommentCount();//设置切换按钮上的评论数量
+});
+ 
+var canClick;
+function setPodcastInfo2(cType){
+    
+ 	canClick = false;
+	$.ajax({
+		url :"show.php?action=comment",
+		type : "POST", 
+		async : true,
+		dataType : "json",
+		data :  {
+			
+			commentType: cType,
+			itemid:{$itemid}
+		},
+		success : function(data) {
+			if(data!=null){
+				addUserComment(data.list);
+				
+				$("#live").addClass("active");
+				$(".live").show("fast");
+				$("#liveIcon").removeClass();
+				$("#liveIcon").addClass("webMessageNum1");
+				
+				$("#Podcasting").removeClass("active");
+				$(".podcasting").hide("fast");	
+				$("#podcast").removeClass();
+				$("#podcast").addClass("webMessageNum2");
+				
+				commentType = 1;//主持人		
+				
+				addPopHeight();
+				canClick = true;
+			}
+		},
+		error: function (data) {
+			canClick = true;
+		}
+	});
+}
+
+//设置切换按钮上的评论数量
+function setCommentCount(){
+	$.ajax({
+		url :"/live/show.php?itemid={$itemid}&action=comment_count",
+		type : "POST", 
+		async : true,
+		dataType : "json",
+		data :  {
+			liveID:{$itemid}
+		},
+		success : function(data) {
+			if(data!=null){
+                
+				$("#UserPersonalAvatar img").attr('src',data.member.avatar);
+                $("#UserPersonalAvatar").show();
+                $("#liveIcon").html(data.liveCount);
+				$("#podcast").html(data.castpodsCount);
+			}
+		},
+		error: function (data) {
+			//alert("Error");
+		}
+	});
+}
+
+function removeComment(cType) {
+	if (cType == 0) {
+		$("#podcastCurrentPage").val(1);
+		$(".podcasting").each(function(){
+			if ($(this).hasClass("sendbtn") == false) {
+				$(this).remove();
+			}
+		});
+	} else {
+		$("#liveCurrentPage").val(1);
+		$(".live").each(function(){
+		 
+			if ($(this).hasClass("reporters") == false) {
+				$(this).remove();
+			}
+			
+		});
+	}	
+	//$(".loading").show();
+}
+
+//添加 一级评论
+function addCommentHtml(data) {
+	if (commentType == 1) {
+		$(".hostToComment").after(getHostCommentHtml(data));
+	} else if (commentType == 0) {
+		$(".userCommentDiv").after(getUserCommentHtml(data));
+	}
+}
+
+//添加 二，三级评论
+function addChildCommentHtml(data, lv, cid, uName) {
+	if (commentSubmitLv == 1) { //二级评论;
+		$(".addChildHtml").parent().after(getSecondCommentHtml(data, cid));
+	} else if (commentSubmitLv == 2) { //三级评论 
+		$(".addThreeHtml").after(getThreeCommentHtml(data, uName));
+	}
+}
+
+//显示浏览用户数据  	
+function setBrowserInfo(){
+    $.ajax({
+		url :"/live/show.php?itemid={$itemid}&action=live_record",
+		type : "POST", 
+		async : true,
+		dataType : "json",
+		data : {
+			liveID:{$itemid},
+			page :1,
+			pagesize:20
+		},
+		success : function(data) {
+			if(data!=null){
+				var liStr = "";
+				$.each(data.list, function (index, item) {
+					liStr += "<li><img src=\""+item.avatar+"\"/></li>";		    	
+				}); 	
+				$("#browserUl").append(liStr);
+				
+				//liStr += "<li class=\"guestsnums\"><span>6162</span>人参与了直播</li>";								
+			}
+		},
+		error: function (data) {
+			//alert("Error");
+		}
+	});
+}
+                    
+</script>
+<!--以下是分享功能模块-->
+<script src="/live/js/jweixin-1.0.0.js"></script>
+<script>
+	wx.config({
+    	debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    	appId: '<?php echo $signPackage["appid"];?>', // 必填，公众号的唯一标识
+    	timestamp:<?php echo $signPackage["timestamp"] ? $signPackage["timestamp"] :'123';?>, // 必填，生成签名的时间戳
+    	nonceStr: '<?php echo $signPackage["noncestr"] ? $signPackage["noncestr"]: '123';?>', // 必填，生成签名的随机串
+    	signature: '<?php echo $signPackage["signature"];?>',// 必填，签名，见附录1
+    	jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','onMenuShareQZone','getNetworkType',
+    		'chooseImage','uploadImage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	});
+  	
+  	var shareImgUrl = "{$item['mobile_thumb']}";
+  	wx.error(function(res){
+  		//location.href = "{$EXT['mobile_domain']}live/show.php?itemid={$itemid}&time=" + new Date().getTime();
+  		event.returnValue = false;
+  	});	
+  	wx.ready(function(){
+	    var shareData = { //分享到朋友圈
+			title: '{$title}', // 分享标题
+			link: '{$EXT['mobile_domain']}live/show.php?itemid={$itemid}',//分享链接
+			desc: '{$introduce}',
+			imgUrl: shareImgUrl, // 分享图标
+			success: function () { 
+			    updateShareCount(); // 用户确认分享后执行的回调函数
+			},
+			cancel: function () { 
+			    // 用户取消分享后执行的回调函数
+		    },
+		    fail:function(res){
+		    	 //alert(JSON.stringify(res));
+		    }
+		};
+		
+		wx.onMenuShareTimeline(shareData);
+		wx.onMenuShareAppMessage(shareData);
+		wx.onMenuShareQQ(shareData);
+		wx.onMenuShareWeibo(shareData);
+		wx.onMenuShareQZone(shareData);
+		
+		$(".updateImage").click(function(){
+			if (imageNum < 6) {
+				chooseImage();
+			} else {
+				layer.msg('上传图片数量不能超过6张');
+			}
+		});
+		var images = {
+			localId: [],
+			serverId: []
+		};
+		function chooseImage() {
+			wx.chooseImage({
+				count : (6 - imageNum), // 默认9
+				sizeType : [ 'original', 'compressed' ], // 可以指定是原图还是压缩图，默认二者都有
+				sourceType : [ 'album', 'camera' ], // 可以指定来源是相册还是相机，默认二者都有
+				success : function(res) {
+				 	images.localId = res.localIds;// 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+					if (images.localId.length > 0) {
+						uploadImage();
+					}
+				},
+				fail : function(res) {
+					layer.msg(JSON.stringify(res));
+				},
+				cancel : function(res) {
+					layer.msg("您取消了上传图片!");
+				}
+			});
+		}
+		function uploadImage() {
+			var i = 0, length = images.localId.length;
+	    	images.serverId = [];
+		    function upload() {
+				wx.uploadImage({
+					localId: images.localId[i],
+				    isShowProgressTips: 1, // 默认为1，显示进度提示
+		        	success: function (res) {
+			          	i++;
+			          	images.serverId.push(res.serverId);
+						downloadImage(res.serverId);
+			          	if (i < length) {
+			            	upload();
+			          	}
+			        },
+		        	fail: function (res) {
+						layer.msg(JSON.stringify(res));
+		        	}
+		  		});
+		    }
+		    upload();
+		}
+	});
+	
+	function downloadImage(serverId) {
+		var imgUrl = new Date().getTime() + '.jpg';
+		$.ajax({
+			url : "/c2ccWeChat/downLoadImage.html",
+			type : "POST",
+			async : true,
+			dataType : "text",
+			data : {
+				MediaId : serverId,
+				FileName : imgUrl
+			},
+			success : function(result) {
+				if (result != null) {
+					var html = '<li tag="/upload/' + imgUrl + '">'
+							+ '<img src="' + result + '">'
+							+ '<i class="removeImage"><img src="/live/images/c2cc_39.png"></i></li>';
+					$(".upLoadImage").append(html);
+					imageNum++;
+				} else {
+					layer.msg("上传图片失败,请重新选择图片！");
+				}
+			},
+			error : function(result) {
+				layer.msg("上传图片失败,请重新选择图片！");
+			}
+		});
+	}
+	
+	//更新页面以及数据库分享数量
+	function updateShareCount(){
+		var shareCount = parseInt($(".markNum").html()) + 1;
+		$(".markNum").html(shareCount);
+		
+		$("#liveShareSpan").html("<i class=\"shareicon\" ></i>" + shareCount);
+		
+		$.ajax({
+			url : "/c2ccWeChat/updateLiveInfo_do.html",
+			type : "POST",
+			async : true,
+			dataType : "json",
+			data : {liveID:{$itemid},type:1},
+			success : function(data) {
+				if (data) { } 
+			},
+		});
+		
+	}
+	
+	//点击足部分享按钮 弹框提示点击右上角可分享
+	/* function sharewx() { 
+		$("body").append("<div class=\"share-wechat-area\" onClick=\"cloedshare()\" ><div class=\"share-wechat-icon\"></div></div>");
+	} */
+	 
+	function cloedshare() { 
+		$(".share-wechat-area").remove(); 
+	}
+</script>
+
+<script src="/live/js/contenteditable.js"></script>
+<script src="/live/js/swiper-3.3.1.jquery.min.js"></script>
+<script>        
+	var mySwiper = new Swiper ('.swiper-container', {
+		direction: 'horizontal',
+		loop : true,
+
+  		// 如果需要分页器
+  		pagination: '.swiper-pagination',
+        paginationClickable: true,
+        
+	    observer:true,//修改swiper自己或子元素时，自动初始化swiper
+	    observeParents:true,//修改swiper的父元素时，自动初始化swiper
+	});  
+</script>
+
+<script>
+	var userid = 20059;
+	var isHost = 0;
+	var intotime = '{$editdate}';
+	var liveid = {$itemid};
+	var commentType = 1;	
+	var basePath = '';
+	var imgBasePath = 'http://7xuui7.com1.z0.glb.clouddn.com';
+	var useEmoji = null;
+	$(function(){
+		
+		//弹框的关闭按钮
+		$(".closeBtn").click(function(){
+			$(".pop_bg").hide();
+			$(".pop_bottom_bg").hide();
+		});
+		
+		$("body").delegate(".showEmoji", "click", function(){
+			//隐藏视频
+			hideLastVideo();
+			useEmoji = $(this).next();
+			$(".pop_bottom_bg").show();
+		});
+
+		$("#live").click(function(){ //直播的点击事件  显示直播模块 隐藏多媒体模块 
+            scrollUrl = "show.php?is_ajax=1&itemid={$itemid}";
+			if ($("#noMsg").hasClass("host_none") == false) {
+				$("#noMsg").hide();
+			}
+		
+			$(this).addClass("active");
+			$("#Podcasting").removeClass("active");
+			$(".live").show("fast");
+			$(".podcasting").hide("fast");
+			
+			$("#liveIcon").removeClass();
+			$("#liveIcon").addClass("webMessageNum1");
+				
+			$("#podcast").removeClass();
+			$("#podcast").addClass("webMessageNum2");
+			
+			commentType = 1;//主持人		
+			
+			addPopHeight();
+		});
+	
+		$("#Podcasting").click(function(){ //多媒体点击事件  显示多媒体模块 隐藏直播模块 
+            scrollUrl = "show.php?is_ajax=1&itemid={$itemid}&action=comment";
+			if (!canClick) {
+				return;
+			}
+			if ($("#noMsg").hasClass("user_none") == false) {
+				$("#noMsg").hide();
+			}
+			
+			$(this).addClass("active");
+			$("#live").removeClass("active");
+			
+			$(".podcasting").show("fast");
+			$(".live").hide("fast");
+			
+			$("#podcast").removeClass();
+			$("#podcast").addClass("webMessageNum1");
+			
+			$("#liveIcon").removeClass();
+			$("#liveIcon").addClass("webMessageNum2");
+			
+			commentType = 0;//用户
+			
+			addPopHeight();
+		});
+		
+		/* $("body").delegate(".readmore", "click", function(){
+			if ($(this).hasClass("on") == false) {
+				$(this).addClass("on");
+				$(this).html("返回<i></i>");
+				$(this).prev().addClass("nscOutlineon");
+			} else {
+				$(this).removeClass("on");
+				$(this).html("详细<i></i>");
+				$(this).prev().removeClass("nscOutlineon");
+			}
+		}); */
+		
+		//置顶
+		$("#toTop").click(function(){
+			$("body").animate({scrollTop: 0}, 300); 
+		});
+		
+		//评论详情
+		$("body").delegate(".mores", "click", function(){
+			var cid = $(this).attr("CID");
+			self.location.href = basePath + "/c2ccWeChat/liveCommentDetails.html?commentID=" + cid + "&liveID=" + liveid + "&commentType=" + commentType;
+		});
+		
+		//设置弹出层的背景大小
+		var height = $(document).height();
+		var width =  $(document).width();
+		$(".pop_bg").attr("style", "width:" + width + "px;height:" + height + "px; margin: auto;");
+		$(".pop_bottom_bg").attr("style", "width:" + width + "px;height:" + height + "px; margin: auto;");
+		
+		//二级评论点赞
+		$(document).on("click",".praise",function(e){
+			addPraise($(this));
+			e.stopPropagation();
+			e.cancelBubble = true;
+		});
+		
+		// 直播点赞
+		//$(document).on("click","#livepraise",function(){
+			//addPraise($(this));
+		//});
+		
+		//自媒体一级评论点赞
+		$(document).on("click",".audienceZan",function(){
+			addPraise($(this));
+		});
+		
+		//足部点赞功能
+		$(".thumbUp").click(function(){
+			
+			if(userid==-1){
+			
+				layer.msg('您的账号已被管理员禁用~');
+				
+			} else if(userid==0){
+				
+				layer.msg('登录后再点赞哦~');
+				
+			}else {//下面是点赞的操作 先实现点赞的动态效果 再联网更新后台数据 
+				
+				var addOrRemove = 0;
+				if($("#livepraise").hasClass("on")){
+				
+					$(".thumbUp").removeClass("on");
+					$("#livepraise").removeClass("on");
+					var praiseCount = eval(parseInt($("#livepraise").text())-1);
+					addOrRemove = 1;
+					
+				}else{
+				
+					$(".thumbUp").addClass("on");
+					$("#livepraise").addClass("on");
+					var praiseCount = eval(parseInt($("#livepraise").text())+1);
+					layer.msg('么么哒(╯ε╰)～');
+					
+				}
+			
+				var level = $("#livepraise").attr("level");
+				$("#livepraise").html("<i class=\"praiseicon\"></i>" + praiseCount );
+				
+				var cid = $(this).attr("commentid");
+				
+				$.ajax({
+					url :"/live/show.php?itemid={$itemid}&action=onlike",
+					type : "POST", 
+					async : true,
+					dataType : "json",
+					data : {
+						userID:userid,
+						commentID :cid,
+						liveID:liveid,
+						level:level,
+						addOrRemove:addOrRemove
+					},
+					success : function(data) {
+						if(data==0){
+							//若返回0,则返回之前已点赞。
+						}
+					},
+					error: function (data) {
+						//alert("Error");
+					}
+				});
+			
+			}
+			
+		});
+		
+		//setContent();
+		
+	});
+	
+	/* function setContent() {
+		$(".nscOutline").each(function(){
+			if ($(this).outerHeight() > 100 && $(this).next().hasClass("readmore") == false) {
+				$(this).attr("style", "height: 8.5rem; overflow: hidden;");
+				$(this).after('<a class="readmore" style="cursor: pointer;">详细<i></i></a>');
+			}
+		});
+	} */
+	
+	//点赞函数
+	function addPraise(obj){
+		
+		if(obj.hasClass("disable")){ //这里是一级评论的类 下面同样包括了praise类  这个不能操作
+		
+		} else if(userid==-1){
+			layer.msg('您的账号已被管理员禁用~');
+		} else if(userid==0){
+			layer.msg('登录后再点赞哦~');
+		}else {//下面是点赞的操作 先实现点赞的动态效果 再联网更新后台数据     因为类名写的乱七八糟  所以平添了许多判断、
+			
+			var addOrRemove = 0;
+			var level = obj.attr("level");
+			if(obj.hasClass("on")){
+				obj.removeClass("on");
+				var praiseCount = eval(parseInt(obj.text())-1);
+				addOrRemove = 1;
+			}else{
+				obj.addClass("on");
+				var praiseCount = eval(parseInt(obj.text())+1);
+				
+				if(level==2){
+					layer.msg('么么哒(╯ε╰)～');
+				}else{
+					if(commentType==0){//如果给用户点赞 弹框
+						layer.msg('这就是爱(｡･ω･｡)ﾉ♡');
+					}else if(commentType==1){
+						layer.msg('么么哒(╯ε╰)～');
+					}
+				}
+				
+			}
+			
+			var level = obj.attr("level");
+			var classStr="";
+			
+			if(level==2){//直播点赞
+				classStr = "praiseicon";
+				
+				if($("#livepraise").hasClass("on")){
+					$(".thumbUp").addClass("on");
+					
+				}else{
+					$(".thumbUp").removeClass("on");
+				}
+				
+			} else if(level==0) {//一级评论点赞
+				if(obj.hasClass("audienceZan")){
+					classStr = "praiseIcon";
+				}
+			}else if(level==1){//二级评论点赞
+				classStr = "praiseIcon";
+			}
+			
+			obj.html("<i class=\""+classStr+"\"></i>" + praiseCount );
+			
+			var cid = obj.attr("commentid");
+			$.ajax({
+				url :"/live/show.php?itemid={$itemid}&action=onlike",
+				type : "POST", 
+				async : true,
+				dataType : "json",
+				data : {
+					userID:userid,
+					commentID :cid,
+					liveID:liveid,
+					level:level,
+					addOrRemove:addOrRemove
+				},
+				success : function(data) {
+					if(data==0){
+						//若返回0,则返回之前已点赞。
+					}
+				},
+				error: function (data) {
+					//alert("Error");
+				}
+			});
+		
+		}
+		
+	}
+	
+	var lastVideo;
+	$(document).on("click",".videoPlayS",function(){
+		//隐藏视频
+		hideLastVideo();
+		
+		lastVideo = $(this);
+		lastVideo.hide();
+		
+		var video = $(this).next();
+		video.show();
+		video.trigger('play'); // 播放
+	});
+	
+	//隐藏视频
+	function hideLastVideo() {
+		if (null != lastVideo ) {
+			lastVideo.show();
+			lastVideo.next().hide();
+		}
+	}
+</script>
+
+<script src="/live/js/comment.js?t=1251"></script>
+
+<!--设置翻页的传参-->
+<script type="text/javascript">
+	//var scrollUrl = basePath + "getLiveCommentJson_do.html";
+    var scrollUrl = "show.php?is_ajax=1&itemid={$itemid}";
+	var pagesize = {$pagesize};
+	function setHtml(data){
+		if(commentType==1){
+			addHostComment(data);
+		}else if(commentType==0){
+			addUserComment(data);
+		}
+		//setContent();
+	}
+</script>
+
+<!--以下是滚动到底部并添加自媒体和直播数据的脚本-->
+<script src="/live/js/scroll.js?t={time()}"></script>
+<script type="text/javascript">
+	var lastHostTime, lastUserTime;
+	function getDate() {
+		var lastTime;
+		var currentPage = 1;
+		if(commentType == 1) {
+			lastTime = lastHostTime;
+			 currentPage = parseInt($("#liveCurrentPage").val()) + 1;
+			$("#liveCurrentPage").val(currentPage); 
+		} else {
+			lastTime = lastUserTime;
+			 currentPage = parseInt($("#podcastCurrentPage").val()) + 1;
+			$("#podcastCurrentPage").val(currentPage); 
+		}
+		currentPage ++;
+		return {
+			page : currentPage,
+			pageSize : pagesize,
+			liveID : {$itemid},
+			commentType: commentType,
+			appTime: lastTime,
+		};
+	}
+	
+	//添加用户评论
+	function addUserComment(data){
+		var itemStr = "";
+		$.each(data, function (index, item) {
+    		lastUserTime = item.AppTime;
+
+			itemStr += getUserCommentHtml(item);
+		}); 
+		$(".row").append(itemStr);
+	}
+	//用户评论
+	function getUserCommentHtml(item) {
+		var appTime = formatDate(item.AppTime, "HH:mm");
+		var mediaStr = "";
+			
+		if (item.VedioUrl != null && item.VedioUrl != "") {
+    		/* mediaStr += "<span class='videoPlayS' ><img src='" + imgBasePath + item.VedioImg + "'/><i class='playICon'></i></span>"
+					+ "<video src='" + imgBasePath + "/upload/" + item.VedioUrl + "' preload='auto' onended='hideLastVideo();' onpause='hideLastVideo();' controls='controls' style='max-height:300px; display: none;' >您的浏览器不支持 video</video>"; */
+			mediaStr += "<span class='videoPlayS' ><img src='" + basePath + item.VedioImg + "'/><i class='playICon'></i></span>"
+					+ "<video src='" + basePath + "/upload/" + item.VedioUrl + "' preload='auto' onended='hideLastVideo();' onpause='hideLastVideo();' controls='controls' style='max-height:300px; display: none;' >您的浏览器不支持 video</video>";
+		} else if(item.Pics != null && item.Pics != "") {
+			var picArrs = item.Pics.split(";"); 
+			if (picArrs.length > 1) {
+				mediaStr += "<ul>";
+				for (var i = 0; i < picArrs.length; i++) {
+					if ("" != picArrs[i]) {
+						//mediaStr += "<li><img src=\"" + imgBasePath + picArrs[i] + "/192x192\" url=\""+ basePath + picArrs[i] +"\" class=\"showImg\" tag=\"" + i+ "\"></li>";
+						mediaStr += "<li><img src=\"" + basePath + picArrs[i] + "\" url=\""+ basePath + picArrs[i] +"\" class=\"showImg\" tag=\"" + i+ "\"></li>";
+					}
+				}
+				mediaStr +="</ul>";
+			} else {
+				if ("" != picArrs[0]) {
+					//mediaStr += "<img src=\"" + imgBasePath + picArrs[0] + "/480x300\" url=\""+ basePath + picArrs[0] +"\" class=\"picNote showImg\" tag=\"0\">";
+					mediaStr += "<img src=\"" + basePath + picArrs[0] + "\" url=\""+ basePath + picArrs[0] +"\" class=\"picNote showImg\" tag=\"0\">";
+				}
+			}
+		}
+			
+		var secondCommentList = item.secondComment;
+		var secondCommentStr = "";
+			
+		if (secondCommentList != null && secondCommentList.length > 0) {
+			var hasMore = 0;
+			for (var i = 0; i < secondCommentList.length; i++) {
+				hasMore ++;
+				if (i < 2) {
+					var secondComment = secondCommentList[i];
+					//获取二级评论 html
+					secondCommentStr += getSecondCommentHtml(secondComment, item.CommentID);
+		                    	
+					/*var thirdCommentList = secondComment.thirdComment;
+					if (thirdCommentList !=null && thirdCommentList.length > 0) {
+						for (var j = 0 ;j < thirdCommentList.length; j++) {
+	      					hasMore ++;
+	               			var thirdComment = thirdCommentList[j];	     
+							//获取三级评论 html
+			   				secondCommentStr += getThreeCommentHtml(thirdComment, secondComment.UserName);               			
+	               		}
+	               	}*/
+				}
+			}
+		}
+		
+		var audienceZanClass = (item.grcount > 0 ? "on" : "");
+		   
+		var hasMoreStr = "";
+		if (hasMore >= 3) {
+			//hasMoreStr = "<div class=\"mores podcasting\" CID=\""+ item.CommentID +"\">更多<i><img src=\"/live/images/c2cc_23.png\"></i></div>";
+		}
+		hasMore =0 ;
+		var itemStr = "<article class=\"studioContents details blocks chatRoom podcasting\">"+
+            	"<div class=\"audience clearfix\">"+
+                    "<div class=\"audienceAvatar\"><i><img src=\"" + item.avatar +"\"></i></div>"+
+                    "<div class=\"audienceName\">"+ item.truename +"</div>"+
+                    "<a  href=\"javascript:;\" class=\"audienceZan " + audienceZanClass + " \" commentid=\""+item.itemid+"\" level=\"0\"><i class=\"praiseIcon\"></i>"+item.likenum+"</a>"+
+                "</div>"+
+           		"<em></em>"+
+            	"<div class=\"detailsTitle clearfix\">"+
+                    "<time class=\"audienceTime\">"+ item.addtime +"</time>"+
+                "</div>"+
+                "<section class=\"nscOutline\">"+ item.content +"</section>"+
+               
+                "<div class=\"studioMedia\">"+ mediaStr +"</div>"+
+               
+               	"<div class=\"studioComments\">"+
+					"<div class=\"replyBtn\">" + 
+						"<a href=\"javascript:;\" class=\"secondCommentSubmit\" CID=\"" + item.itemid + "\"><i></i>我要评论</a>" + 
+					"</div>"
+                   + secondCommentStr +"</div>"+
+           	"</article>" + hasMoreStr;
+       return itemStr;
+	}
+	
+	//上拉添加主持人评论
+	function addHostComment(data){
+		var liveItem = "";
+		$.each(data, function (index, item) {
+    		lastHostTime = item.AppTime;
+			liveItem += getHostCommentHmtl(item);
+		});
+		$(".row").append(liveItem);
+	}
+	
+	function getHostCommentHmtl(item) {
+		var appTime = formatDate(item.AppTime, "HH:mm");
+            	
+		var mediaStr = "";
+		if (item.VedioUrl !=null && item.VedioUrl != "") {
+			/* mediaStr += "<span class='videoPlayS' ><img src='" + imgBasePath + item.VedioImg + "'/><i class='playICon'></i></span>"
+            	+ "<video src='" + imgBasePath + "/upload/" + item.VedioUrl + "' preload='auto' onended='hideLastVideo();' onpause='hideLastVideo();' controls='controls' style='max-height:300px; display: none;' >您的浏览器不支持 video</video>"; */
+            mediaStr += "<span class='videoPlayS' ><img src='" + basePath + item.VedioImg + "'/><i class='playICon'></i></span>"
+            	+ "<video src='" + basePath + "/upload/" + item.VedioUrl + "' preload='auto' onended='hideLastVideo();' onpause='hideLastVideo();' controls='controls' style='max-height:300px; display: none;' >您的浏览器不支持 video</video>";
+		} else if (item.Pics !=null && item.Pics != "") {
+			var picArrs = item.Pics.split(";");
+			if (picArrs.length > 1) {
+				mediaStr += "<ul>";
+				for (var i = 0; i < picArrs.length; i++) {
+					if ("" != picArrs[i]) {
+						//mediaStr += "<li><img src=\""+ imgBasePath + picArrs[i] + "/192x192\" url=\""+ basePath + picArrs[i] +"\" class=\"showImg\" tag=\"" + i+ "\"></li>";
+						mediaStr += "<li><img src=\""+ basePath + picArrs[i] + "\" url=\""+ basePath + picArrs[i] +"\" class=\"showImg\" tag=\"" + i+ "\"></li>";
+					}
+				}
+           		mediaStr += "</ul>";
+			} else {
+				if ("" != picArrs[0]) {
+					//mediaStr = "<img src=\"" + imgBasePath  + picArrs[0] + "/480x300\" url=\""+ basePath + picArrs[0] +"\" class=\"picNote showImg\" tag=\"0\">";
+					mediaStr = "<img src=\"" + basePath  + picArrs[0] + "\" url=\""+ basePath + picArrs[0] +"\" class=\"picNote showImg\" tag=\"0\">";
+				}
+			}
+		}
+            	
+  		var commentEditOn = (item.grcount > 0 ? "on" : "");
+
+       	var secondCommentList = item.secondComment;
+		var secondCommentStr = "";
+           	
+   		var hasMore = 0;
+		if (secondCommentList != null) {
+			for (var i = 0; i < secondCommentList.length; i++) {
+				hasMore++;
+         		if (i < 2) {
+					var secondComment = secondCommentList[i];
+					//获取二级评论 html
+					secondCommentStr += getSecondCommentHtml(secondComment, item.itemid);
+	                    
+					/*var thirdCommentList = secondComment.thirdComment;
+					if (thirdCommentList != null && thirdCommentList != "") {
+						for (var j = 0; j < thirdCommentList.length; j++) {
+	          				hasMore++;
+	          				var thirdComment = thirdCommentList[j];
+							//获取三级评论 html
+			   				secondCommentStr += getThreeCommentHtml(thirdComment, secondComment.UserName);
+	            		}
+					}*/
+				}
+       		}
+		}
+            
+		var hasMoreStr = "";
+		if (hasMore >= 3) {
+			hasMoreStr = "<div class=\"mores live\" CID=\""+item.CommentID+"\">更多<i><img src=\"/live/images/c2cc_23.png\"></i></div>";
+		}
+		hasMore =0 ;
+			            	
+ 		var liveItem = "<article class=\"studioContents details blocks live\">"+
+           	"<div class=\"detailsTitle clearfix\">"+
+               	"<i class=\"titleIcon\"><img src=\"/live/images/c2cc_05.png\"></i>"+
+               	"<h2>"+item.Title+"</h2>"+
+                   "<time>"+appTime+"</time>"+
+               "</div>"+
+               "<section class=\"nscOutline\">"+ item.Content +"</section>"+
+               "<div class=\"studioMedia\">"+ mediaStr +"</div>"+
+               "<div class=\"studioComments\">"+
+                   "<div class=\"replyBtn\">" + 
+					"<a href=\"javascript:;\" class=\"secondCommentSubmit\" CID=\"" + item.CommentID + "\"><i></i>我要评论</a>" + 
+				"</div>" + secondCommentStr +"</div>"+
+           "</article>"+ hasMoreStr;
+       return liveItem;
+	}
+	
+	//获取二级评论
+	function getSecondCommentHtml(secondComment, CID) {
+
+		var replyTime = formatDate(secondComment.ReplyTime, "HH:mm");
+		var praiseClass = (secondComment.cgrccount > 0 ? "on" : "");
+		var removeLine = /* (i == 0 ? "yiji" : "") */ "";
+					
+		var secondCommentStr = "<div class=\"commentReview threeToComment "+ removeLine +" \" CID=\""+ CID +"\" tag=\""+ secondComment.CommentChildID +"\"  UName=\""+ secondComment.truename +"\">"+
+			"<section class=\"clearfix\">"+
+				"<div class=\"webCastRole\">"+
+					"<a href=\"javascript:;\">"+
+						"<span><img src=\"" + secondComment.avatar +"\"></span>"+
+          			"</a>"+
+          		"</div>"+
+          		"<div class=\"webCastSub\">"+
+           			"<div class=\"webCastName\">"+
+             			"<span>"+ secondComment.UserName +"</span>"+
+              			"<time>"+ secondComment.addtime +"</time>"+
+                   		"<a href=\"javascript:;\" commentid=\""+secondComment.itemid+"\" level=\"1\" class=\"praise " + praiseClass+ "\"><i class=\"praiseIcon\"></i>"+ secondComment.likenum +"</a>"+
+             		"</div>"+
+        			"<p>"+ secondComment.content +"</p>"+
+    			"</div>"+
+         	"</section>"+
+     		"</div>";
+       return secondCommentStr;
+	}
+	
+	//获取 三级评论
+	function getThreeCommentHtml(thirdComment, userName) {
+		var thirdReplyTime = formatDate(thirdComment.ReplyTime, "HH:mm");
+	                    		
+		var secondCommentStr = "<div class=\"commentReview secondary\">"+
+			"<section class=\"clearfix\">"+
+	      		"<div class=\"webCastRole\">"+
+	         		"<a href=\"javascript:;\">"+
+	         			"<span><img src=\"" + thirdComment.HeaderUrl +"\"></span>"+
+	          		"</a>"+
+	 			"</div>"+
+	     		"<div class=\"webCastSub\">"+
+	         		"<div class=\"webCastName\">"+
+	                	"<span>"+ thirdComment.UserName +"</span>"+
+	              		"<time>"+ thirdReplyTime +"</time>"+
+	              	"</div>"+
+	        		"<p>回复<span>"+ userName +"：</span> "+ thirdComment.Content +"</p>"+
+	        	"</div>"+
+      		"</section>"+
+    	"</div>";
+        return secondCommentStr;
+	}
+</script>
+
+<div id="layerImg" style="width: 100%;height: 100%;display: none;position: absolute;float:left;"></div>
+<!--弹框layer层函数-->
+
+<script src="/live/js/layer/layer.js"></script>
+<!-- pinchzoom requires: jquery -->
+<script type="text/javascript" src="/live/js/pinchzoom.js"></script>
+<script type="text/javascript">
+	function setImg(tag) {
+		$('.imgscale').on('click', function(){
+			$("#layerImg").hide();
+		});
+		$('.imgscale img').on('click', function() {
+			$("#layerImg").hide();
+		});
+	
+		var mySwiper = new Swiper('.showSwiperImg .swiper-container', {
+			direction : 'horizontal',
+			loop : false,
+	
+			initialSlide : tag,
+			// 如果需要分页器
+			pagination : '.showSwiperImg .swiper-pagination',
+			paginationClickable : true,
+	
+			observer : true,//修改swiper自己或子元素时，自动初始化swiper
+			observeParents : true,//修改swiper的父元素时，自动初始化swiper
+			
+			/* touchMoveStopPropagation : false; */
+		});
+		$('div.pinch-zoom').each(function() {
+			new RTP.PinchZoom($(this), {});
+		});
+	}
+	function addImgHtml(data) {	
+		var html = "<div class=\"swiper_model showSwiperImg\">" + 
+			"<div class=\"swiper-container\" style=\"height: 100%;\">" + 
+			"<div class=\"swiper-wrapper\">";
+			for (var i = 0; i < data.length; i++) {
+				var info = data[i];		
+					
+				html = html + "<div class=\"swiper-slide scEmoji\">" + 
+				"<div class=\"page imgscale\">" + 
+					"<div class=\"pinch-zoom\">" + 
+						/* "<img src=\"http://7xuui7.com1.z0.glb.clouddn.com" + info +"\" style=\"cursor: pointer;\"/>" +  */
+						"<img src=\"" + info +"\" style=\"cursor: pointer;\"/>" + 
+					"</div>" + 
+				"</div></div>";
+			}
+		html = html + "</div><div class=\"swiper-pagination\" style=\"bottom: 20px;\"></div></div></div>";
+		$("#layerImg").html(html);  
+		$("#layerImg").show();
+	}
+</script>
+<script type="text/javascript">
+	function layerImg(url, tag) {
+		//iframe层
+		layer.open({
+		  type: 2,
+		  title: false,
+		  closeBtn: 0,
+		  area: ['100%', '100%'],
+		  content: 'img.html?ImgUrl=' + url + '&Index=' + tag, //iframe的url
+		  success: function(layer, index){
+			 
+		  }
+		}); 
+	}
+	function alertDiv(url, tag) {
+		$("#layerImg").html("");
+		addImgHtml(url);
+		setImg(tag);
+	}
+	$(document).on('click', '.showImg', function(e) {
+        var id = $(this).attr('rel');
+        layer.photos({
+          photos: '#photos_'+id
+          ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        }); 
+       //location.href=$(this).attr('src');
+		 
+	});
+</script>
+
+<!--以下是格式化日期的函数-->
+<script>   
+function formatDate(date, format) {   
+    if (!date) return;   
+    if (!format) format = "yyyy-MM-dd";   
+    switch(typeof date) {   
+        case "string":   
+            date = new Date(date.replace(/-/g, "/"));   
+            break;   
+        case "number":   
+            date = new Date(date);   
+            break;   
+    }    
+    if (!date instanceof Date) return;   
+    var dict = {   
+        "yyyy": date.getFullYear(),   
+        "M": date.getMonth() + 1,   
+        "d": date.getDate(),   
+        "H": date.getHours(),   
+        "m": date.getMinutes(),   
+        "s": date.getSeconds(),   
+        "MM": ("" + (date.getMonth() + 101)).substr(1),   
+        "dd": ("" + (date.getDate() + 100)).substr(1),   
+        "HH": ("" + (date.getHours() + 100)).substr(1),   
+        "mm": ("" + (date.getMinutes() + 100)).substr(1),   
+        "ss": ("" + (date.getSeconds() + 100)).substr(1)   
+    };       
+    return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function() {   
+        return dict[arguments[0]];   
+    });                   
+}  
+
+haveNewData();
+function haveNewData() {
+	setTimeout(function(){
+		$.ajax({
+			url :"show.php?is_ajax=1",
+			type : "POST", 
+			async : true,
+			dataType : "html",
+			data : {
+				Time: intotime ,
+				LiveID: liveid
+			},
+			success : function(data) {
+				if (data == "200") {
+					$(".havaNewData").show();
+				} else {
+					haveNewData();
+				}
+			},
+			error: function (data) {
+				haveNewData();
+			}
+		});
+	},15000);
+}
+</script>  
+<!--百度统计/CNZZ-->
+<div style="display:none">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?fbb9f71b76d9bc550488931c45a8272d";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1254713025&web_id=1254713025"></script>
+<!--百度统计/CNZZ-->
+</div>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="Description" content="时装秀直播">
+<meta name="Keywords" content="时装秀直播">
+<title>时装秀直播</title>
+<link href="css/video.css" rel="stylesheet" type="text/css">
+<script src="js/video.min.js"></script>
+<script>
+(function(doc, win) {
+  var docEl = doc.documentElement;
+  var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
+  var reCalc = function() {
+      var clientWidth = docEl.clientWidth;
+      if (!clientWidth) return;
+      win.baseFontSize = 100 * (clientWidth / 750);
+      docEl.style.fontSize = win.baseFontSize + 'px'
+    };
+  if (!doc.addEventListener) return;
+  reCalc();
+  win.addEventListener(resizeEvt, reCalc, false);
+  doc.addEventListener('DOMContentLoaded', reCalc, false)
+})(document, window);
+</script>
+<style>
+html{-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;}
+body,html{height: 100%;-webkit-tap-highlight-color: transparent;padding: 0; margin: 0;}
+a{border: 0; text-decoration: none;}
+body{line-height: 1.6; font-size: .24rem; font-family: -apple-system-font,"Helvetica Neue",sans-serif; background: #000; color: #fff;}
+.page{width: 7.5rem; margin: 0 auto;}
+.head{height: 4.8rem; background-position: 1.48rem center; background-size: 4.41rem 1.7rem; background-repeat: no-repeat; background-image: url('img/slogan.png');}
+.video{width: 6.9rem; margin: 0 auto; height: 3.97rem; background-color: #fff;}
+.foot{width: 6.32rem; height: 1.6rem; background: url('./img/link.jpg') no-repeat center top / cover; margin: 1.78rem auto;display: -webkit-box;display: -webkit-flex;display: flex; text-align: center;}
+.foot a{display: inline-block; width: 2rem; height: 1.6rem; overflow: hidden; text-indent: -999px; font-size: 0;}
+.center{-webkit-box-flex: 1;-webkit-flex: 1; flex: 1;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="head"></div>
+  <div class="video">
+    <video id='myvideo' class="video-js vjs-default-skin" controls>
+      <source src="http://aodianyun.360xh.com/m3u8/0x0/360xhapp.stream.1629372303/360xhapp.stream.1629372303.m3u8">    
+    </video>
+  </div>
+  <div class="foot">
+    <a href="https://mp.weixin.qq.com/s/qRv1XOobrLlUOKsW5nbkzQ">微信</a>
+    <div class="center">
+      <a href="https://www.xiaohongshu.com/user/profile/5def76470000000001005624?xhsshare=CopyLink&appuid=5bf5e05241f77e00012b1226&apptime=1632905434">小红书</a>
+    </div>
+    <a href="https://weibo.com/u/7645896972">微博</a>
+  </div>
+</div>
+<script type="text/javascript" charset="utf-8" src="https://cdn.aodianyun.com/static/jquery/jquery-1.7.2.min.js"></script>
+<script> 
+  var vw = $('.video').width(), vh = $('.video').height();
+  var player = videojs('myvideo', {"width":vw,"height":vh}, function(){
+    console.log('videojs播放器初始化成功')
+  })
+  player.play();
+
+  //https://github.com/videojs/videojs-contrib-hls/blob/master/docs/bitrate-switching.md
+  //https://blog.csdn.net/little__SuperMan/article/details/89203270/
+</script>
+</body>
+</html>
