@@ -44,8 +44,8 @@ body{line-height: 1.6; font-size: .24rem; font-family: -apple-system-font,"Helve
 <div class="page">
   <div class="head"></div>
   <div class="video">
-    <video id='myvideo' class="video-js vjs-default-skin" controls>
-      <source src="http://aodianyun.360xh.com/m3u8/0x0/360xhapp.stream.1629372303/360xhapp.stream.1629372303.m3u8">    
+    <video id='myvideo' class="video-js vjs-default-skin" poster="img/poster.jpg" controls>
+      <source src="https://cdn3.wowza.com/1/SnVidXNWc0o3SXM5/SEttaGZy/hls/live/playlist.m3u8">    
     </video>
   </div>
   <div class="foot">
@@ -63,9 +63,7 @@ body{line-height: 1.6; font-size: .24rem; font-family: -apple-system-font,"Helve
     console.log('videojs播放器初始化成功')
   })
   player.play();
-
-  //https://github.com/videojs/videojs-contrib-hls/blob/master/docs/bitrate-switching.md
-  //https://blog.csdn.net/little__SuperMan/article/details/89203270/
+  //http://aodianyun.360xh.com/m3u8/0x0/360xhapp.stream.1629372303/360xhapp.stream.1629372303.m3u8
 </script>
 </body>
 </html>
